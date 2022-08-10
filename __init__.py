@@ -1,8 +1,10 @@
 from mycroft                            import MycroftSkill, intent_handler
+from mycroft.audio                      import wait_while_speaking
 from mycroft.configuration.config       import LocalConf
 from mycroft.configuration.locations    import USER_CONFIG
 from mycroft.messagebus                 import Message
 from pathlib                            import Path
+import time
 import fileinput
 import os
 import subprocess
@@ -48,10 +50,10 @@ class Language(MycroftSkill):
                     print(line, end='')
         config.store()
         self.bus.emit(Message('configuration.updated'))
+        wait_while_speaking()
+        time.sleep(5)
         subprocess.Popen("pm2 restart MagicMirror".split(), stdout=subprocess.PIPE).communicate()     
         subprocess.Popen(f"bash {os.path.join(Path.home(), 'mycroft-core', 'start-mycroft.sh')} restart all".split(), stdout=subprocess.PIPE).communicate()
         
-
-    
 def create_skill() -> Language:
     return Language()
