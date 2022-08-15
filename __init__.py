@@ -36,11 +36,13 @@ class Language(MycroftSkill):
         self.speak_dialog('setting.language', {'language': {v: k for k, v in self.translate_namedvalues('language', ',').items()}[lang]})
 
         if lang.lower() == 'en-us':
-            config["tts"]["marytts"]["lang"] = "en"
-            config["tts"]["marytts"]["voice"] = "nanotts:en-US"
+            config["tts"]["marytts"]["lang"]    = "en"
+            config["tts"]["marytts"]["voice"]   = "nanotts:en-US"
+            config["stt"]["mycroft"]["lang"]    = "en-us"
         elif lang.lower() == 'sv-se':
-            config["tts"]["marytts"]["lang"] = "sv"
-            config["tts"]["marytts"]["voice"] = "espeak:sv"
+            config["tts"]["marytts"]["lang"]    = "sv"
+            config["tts"]["marytts"]["voice"]   = "espeak:sv"
+            config["stt"]["mycroft"]["lang"]    = "sv-se"
             
         with fileinput.FileInput(os.path.join(Path.home(), 'MagicMirror', 'config', 'config.js'), inplace=True) as f:
             for line in f:
